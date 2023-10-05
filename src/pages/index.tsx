@@ -50,7 +50,7 @@ export default function Home() {
                 {data && <FeatureFlagTable rows={data} />}
               </div>
               <Divider />
-              <CreateNewFlagWizard />
+              <CreateNewFlagWizard flagKeys={data ? data?.map(({ flag }) => flag.key) : []}/>
             </>
           )}
         </div>

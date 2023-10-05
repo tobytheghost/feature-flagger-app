@@ -8,6 +8,7 @@ import {
   privateProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+import { convertFlagNameToKey } from "../../../utils/convertFlagNameToKey";
 
 const flagSchema = z.object({
   name: z.string().max(144),
@@ -91,9 +92,17 @@ export const flagsRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.userId;
       const { name } = input;
+
+      if (!name) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Name is required",
+        });
+      }
+
       const flag = await ctx.prisma.flag.create({
         data: {
-          key: name.toLowerCase().replace(/ /g, "-"),
+          key: convertFlagNameToKey(name),
           name,
           createdBy: userId,
           updatedBy: userId,
