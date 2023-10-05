@@ -12,14 +12,12 @@ import Switch from "@mui/material/Switch";
 import Button from "@mui/material/Button";
 import { type FlagsRouter } from "../server/api/routers/flags";
 import { type inferRouterOutputs } from "@trpc/server";
-import Image from "next/image";
 
 type Flags = inferRouterOutputs<FlagsRouter>["getAll"];
 
 type FeatureFlagTableProps = {
   rows: Flags;
 };
-
 export const FeatureFlagTable: React.FC<FeatureFlagTableProps> = ({ rows }) => {
   console.log(rows);
   return (
