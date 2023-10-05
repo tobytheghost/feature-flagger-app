@@ -12,6 +12,7 @@ import Switch from "@mui/material/Switch";
 import Button from "@mui/material/Button";
 import { type FlagsRouter } from "../server/api/routers/flags";
 import { type inferRouterOutputs } from "@trpc/server";
+import toast from "react-hot-toast";
 
 type Flags = inferRouterOutputs<FlagsRouter>["getAll"];
 
@@ -19,7 +20,6 @@ type FeatureFlagTableProps = {
   rows: Flags;
 };
 export const FeatureFlagTable: React.FC<FeatureFlagTableProps> = ({ rows }) => {
-  console.log(rows);
   return (
     <TableContainer className="" component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -52,6 +52,11 @@ const FeatureFlagRow: React.FC<FeatureFlagRowProps> = ({
 }) => {
   const [isEditable, setIsEditable] = useState(false);
 
+  const handleKeyClick = async (key: string) => {
+	await navigator.clipboard.writeText(key);
+	toast.success("Copied to clipboard");
+  }
+
   return (
     <TableRow
       key={flag.key}
@@ -60,7 +65,7 @@ const FeatureFlagRow: React.FC<FeatureFlagRowProps> = ({
       <TableCell component="th" scope="row">
         {flag.name}
       </TableCell>
-      <TableCell>{flag.key}</TableCell>
+      <TableCell><button onClick={() => void handleKeyClick(flag.key)}>{flag.key}</button></TableCell>
       <TableCell>
         <div>
           <span>{flag.updatedAt.toLocaleDateString("en-GB")} </span>
