@@ -3,6 +3,7 @@ import { SignInButton, useClerk, useUser } from "@clerk/nextjs";
 import { api } from "~/utils/api";
 import FeatureFlagTable from "../components/FeatureFlagTable";
 import { CreateNewFlagWizard } from "../components/CreateNewFlagWizard";
+import Loader from "../components/Loader";
 
 export default function Home() {
   const { isSignedIn, isLoaded: userLoaded, user } = useUser();
@@ -13,7 +14,8 @@ export default function Home() {
   if (!userLoaded)
     return (
       <div className="flex min-h-screen flex-col items-center justify-center">
-        Loading ...
+        <Loader />
+        <div>Loading ...</div>
       </div>
     );
 
@@ -47,8 +49,8 @@ export default function Home() {
                   Sign Out
                 </button>
               </div>
-              <div className="flex flex-col gap-4">
-                {data && <FeatureFlagTable rows={data} />}
+              <div className="flex flex-col justify-center gap-4 align-middle">
+                {data ? <FeatureFlagTable rows={data} /> : <Loader />}
               </div>
               <CreateNewFlagWizard
                 flagKeys={data ? data?.map(({ flag }) => flag.key) : []}

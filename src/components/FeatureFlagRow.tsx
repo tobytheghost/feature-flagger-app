@@ -164,7 +164,7 @@ const FeatureFlagRow: React.FC<FeatureFlagRowProps> = ({
                 }}
               />
             </span>
-            <span className="ml-auto flex w-20 gap-2">
+            <span className="ml-auto flex w-20 gap-2 justify-end">
               <button
                 className="btn btn-info btn-sm"
                 type={isEditable ? "button" : "submit"}
