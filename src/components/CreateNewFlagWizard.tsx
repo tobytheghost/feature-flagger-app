@@ -60,45 +60,76 @@ export const CreateNewFlagWizard: React.FC<CreateNewFlagWizardProps> = ({
   if (!isSignedIn) return null;
 
   return (
-    <form className="prose flex w-full flex-col gap-3" onSubmit={onSubmit}>
-      <h2 className="text-xl">Create new feature flag</h2>
-      <div className="form-control w-full max-w-xs">
-        <label className="label">
-          <span className="label-text">Name</span>
-        </label>
-        <input
-          className={`input input-md input-bordered grow ${
-            !!formState.errors.name ? "input-error" : ""
-          }`}
-          type="text"
-          disabled={isPosting}
-          {...register("name")}
-        />
-        {formState.errors.name?.message && (
-          <span className="text-red-500">{formState.errors.name?.message}</span>
-        )}
+    <>
+      <div>
+        <button
+          className="btn"
+          onClick={() => {
+            const dialog = document.getElementById(
+              "createFlagModal",
+            ) as HTMLDialogElement;
+            return dialog.showModal();
+          }}
+        >
+          Create new flag
+        </button>
       </div>
-      <div className="form-control w-full max-w-xs">
-        <label className="label">
-          <span className="label-text">Description</span>
-        </label>
-        <input
-          className={`input input-md input-bordered grow ${
-            !!formState.errors.description ? "input-error" : ""
-          }`}
-          type="text"
-          disabled={isPosting}
-          {...register("description")}
-        />
-        {formState.errors.description?.message && (
-          <span className="text-red-500">
-            {formState.errors.description?.message}
-          </span>
-        )}
-      </div>
-      <button className="btn btn-info flex w-24" type="submit" disabled={isPosting}>
-        {isPosting ? "Creating..." : "Create"}
-      </button>
-    </form>
+      <dialog id="createFlagModal" className="modal">
+        <div className="modal-box">
+          <form
+            className="prose flex w-full flex-col gap-3"
+            onSubmit={onSubmit}
+          >
+            <h2 className="text-xl">Create new feature flag</h2>
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                className={`input input-md input-bordered grow ${
+                  !!formState.errors.name ? "input-error" : ""
+                }`}
+                type="text"
+                disabled={isPosting}
+                {...register("name")}
+              />
+              {formState.errors.name?.message && (
+                <span className="text-red-500">
+                  {formState.errors.name?.message}
+                </span>
+              )}
+            </div>
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text">Description</span>
+              </label>
+              <input
+                className={`input input-md input-bordered grow ${
+                  !!formState.errors.description ? "input-error" : ""
+                }`}
+                type="text"
+                disabled={isPosting}
+                {...register("description")}
+              />
+              {formState.errors.description?.message && (
+                <span className="text-red-500">
+                  {formState.errors.description?.message}
+                </span>
+              )}
+            </div>
+            <button
+              className="btn btn-info mt-4 flex w-24"
+              type="submit"
+              disabled={isPosting}
+            >
+              {isPosting ? "Creating..." : "Create"}
+            </button>
+          </form>
+          <form method="dialog" className="absolute bottom-6 right-6">
+            <button className="btn">Cancel</button>
+          </form>
+        </div>
+      </dialog>
+    </>
   );
 };

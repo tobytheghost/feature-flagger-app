@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { z } from "zod";
 import { type FlagsRouter } from "../server/api/routers/flags";
 import { api } from "../utils/api";
+import { DeleteFlagModal } from "./DeleteFlagWizard";
 
 export type Flags = inferRouterOutputs<FlagsRouter>["getAll"];
 
@@ -75,8 +76,8 @@ const FeatureFlagRow: React.FC<FeatureFlagRowProps> = ({
       </td>
       <td>
         <div>
-          <span>{flag.updatedAt.toLocaleDateString("en-GB")}{" "}</span>
-          <span>by{" "}</span>
+          <span>{flag.updatedAt.toLocaleDateString("en-GB")} </span>
+          <span>by </span>
           <a
             href={`https://github.com/${updatedByUser?.username}`}
             className="text-blue-500"
@@ -163,17 +164,30 @@ const FeatureFlagRow: React.FC<FeatureFlagRowProps> = ({
                 }}
               />
             </span>
-            <span className="ml-auto w-20">
+            <span className="ml-auto flex w-20 gap-2">
               <button
                 className="btn btn-info btn-sm"
                 type={isEditable ? "button" : "submit"}
                 onClick={() => setIsEditable((e) => !e)}
               >
-                {isEditable ? "Done" : "Edit"}
+                {isEditable ? "D" : "E"}
+              </button>
+              <button
+                className="btn btn-error btn-sm"
+                type="button"
+                onClick={() => {
+                  const dialog = document.getElementById(
+                    "deleteFlagModal",
+                  ) as HTMLDialogElement;
+                  return dialog.showModal();
+                }}
+              >
+                D
               </button>
             </span>
           </div>
         </form>
+        <DeleteFlagModal flag={flag} modalId="deleteFlagModal" />
       </td>
     </tr>
   );
