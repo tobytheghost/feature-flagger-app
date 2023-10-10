@@ -170,24 +170,11 @@ const FeatureFlagRow: React.FC<FeatureFlagRowProps> = ({
                 type={isEditable ? "button" : "submit"}
                 onClick={() => setIsEditable((e) => !e)}
               >
-                {isEditable ? "D" : "E"}
-              </button>
-              <button
-                className="btn btn-error btn-sm"
-                type="button"
-                onClick={() => {
-                  const dialog = document.getElementById(
-                    "deleteFlagModal",
-                  ) as HTMLDialogElement;
-                  return dialog.showModal();
-                }}
-              >
-                D
+                {isEditable ? "Done" : "Edit"}
               </button>
             </span>
           </div>
         </form>
-        <DeleteFlagModal flag={flag} modalId="deleteFlagModal" />
       </td>
     </tr>
   );
