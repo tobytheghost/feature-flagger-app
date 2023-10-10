@@ -1,10 +1,7 @@
 import Head from "next/head";
 import { SignInButton, useClerk, useUser } from "@clerk/nextjs";
-
 import { api } from "~/utils/api";
 import FeatureFlagTable from "../components/FeatureFlagTable";
-import { Divider } from "@mui/material";
-import Button from "@mui/material/Button";
 import { CreateNewFlagWizard } from "../components/CreateNewFlagWizard";
 
 export default function Home() {
@@ -28,7 +25,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center" data-theme="cupcake">
-        <div className="min-w-{1024} w-{1024} flex max-w-full flex-col justify-stretch gap-4 p-4">
+        <div className="min-w-[1024px] w-[1024px] flex max-w-full flex-col justify-stretch gap-4 p-4">
           {!isSignedIn && (
             <>
               <div>Please login:</div>
@@ -41,14 +38,13 @@ export default function Home() {
             <>
               <div>Welcome {user?.firstName ?? user?.username}!</div>
               <div className="flex justify-end gap-4 align-baseline">
-                <Button variant="outlined" onClick={() => void signOut()}>
+                <button className="btn" onClick={() => void signOut()}>
                   Sign Out
-                </Button>
+                </button>
               </div>
               <div className="flex flex-col gap-4">
                 {data && <FeatureFlagTable rows={data} />}
               </div>
-              <Divider />
               <CreateNewFlagWizard
                 flagKeys={data ? data?.map(({ flag }) => flag.key) : []}
               />

@@ -63,7 +63,11 @@ const FeatureFlagRow: React.FC<FeatureFlagRowProps> = ({
 
   return (
     <tr key={flag.key}>
-      <td scope="row">{flag.name}</td>
+      <td scope="row">
+        <div className="tooltip tooltip-right" data-tip={flag.description}>
+          {flag.name}
+        </div>
+      </td>
       <td>
         <button onClick={() => void handleKeyClick(flag.key)}>
           {flag.key}
@@ -71,8 +75,8 @@ const FeatureFlagRow: React.FC<FeatureFlagRowProps> = ({
       </td>
       <td>
         <div>
-          <span>{flag.updatedAt.toLocaleDateString("en-GB")} </span>
-          <span>by </span>
+          <span>{flag.updatedAt.toLocaleDateString("en-GB")}{" "}</span>
+          <span>by{" "}</span>
           <a
             href={`https://github.com/${updatedByUser?.username}`}
             className="text-blue-500"
@@ -98,7 +102,7 @@ const FeatureFlagRow: React.FC<FeatureFlagRowProps> = ({
                   return (
                     <input
                       className="toggle toggle-info m-auto"
-                      disabled={!(!isPosting && !field.disabled)}
+                      disabled={field.disabled}
                       name={field.name}
                       type="checkbox"
                       onChange={field.onChange}
@@ -123,7 +127,7 @@ const FeatureFlagRow: React.FC<FeatureFlagRowProps> = ({
                   return (
                     <input
                       className="toggle toggle-info m-auto"
-                      disabled={!(!isPosting && !field.disabled)}
+                      disabled={field.disabled}
                       name={field.name}
                       type="checkbox"
                       onChange={field.onChange}
@@ -148,7 +152,7 @@ const FeatureFlagRow: React.FC<FeatureFlagRowProps> = ({
                   return (
                     <input
                       className="toggle toggle-info m-auto"
-                      disabled={!(!isPosting && !field.disabled)}
+                      disabled={field.disabled}
                       name={field.name}
                       type="checkbox"
                       onChange={field.onChange}

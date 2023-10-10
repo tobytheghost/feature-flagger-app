@@ -36,7 +36,7 @@ export const flagsRouter = createTRPCRouter({
     .input(flagSchema)
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.userId;
-      const { name } = input;
+      const { name, description } = input;
 
       if (!name) {
         throw new TRPCError({
@@ -45,10 +45,18 @@ export const flagsRouter = createTRPCRouter({
         });
       }
 
+      if (!description) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Description is required",
+        });
+      }
+
       const flag = await ctx.prisma.flag.create({
         data: {
           key: convertFlagNameToKey(name),
           name,
+          description,
           createdBy: userId,
           updatedBy: userId,
           development: true,
